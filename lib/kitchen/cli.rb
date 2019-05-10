@@ -282,14 +282,9 @@ module Kitchen
 
     desc "version", "Print Kitchen's version information"
     def version
-      puts "Test Kitchen version #{Kitchen::VERSION}"
+      puts "foodtruck-ci version #{Kitchen::VERSION}"
     end
     map %w{-v --version} => :version
-
-    desc "sink", "Show the Kitchen sink!", hide: true
-    def sink
-      perform("sink", "sink")
-    end
 
     desc "console", "Kitchen Console!"
     def console
