@@ -31,7 +31,7 @@ module Kitchen
       class_option :driver,
                    type: :array,
                    aliases: "-D",
-                   default: %w{kitchen-vagrant},
+                   default: %w{docker},
                    desc: <<-D.gsub(/^\s+/, "").tr("\n", " ")
           One or more Kitchen Driver gems to be installed or added to a
           Gemfile
@@ -55,10 +55,8 @@ module Kitchen
 
       # Invoke the command.
       def init
-        self.class.source_root(Kitchen.source_root.join("templates", "init"))
-
+        self.class.source_root(Kitchen.source_root.join("kitchen", "templates"))
         create_kitchen_yaml
-        create_chefignore
         prepare_rakefile
         prepare_thorfile
         create_test_dir
@@ -77,20 +75,13 @@ module Kitchen
                           MetadataChopper.extract("metadata.rb").first
                         end
         run_list = cookbook_name ? "recipe[#{cookbook_name}::default]" : nil
-        driver_plugin = Array(options[:driver]).first || "dummy"
+        driver_plugin = Array(options[:driver]).first || "docker"
 
-        template("kitchen.yml.erb", "kitchen.yml",
+        template("init/kitchen.yml.erb", "kitchen.yml",
                  driver_plugin: driver_plugin.sub(/^kitchen-/, ""),
                  provisioner: options[:provisioner],
                  run_list: Array(run_list)
                 )
-      end
-
-      # Creates the `chefignore` file.
-      #
-      # @api private
-      def create_chefignore
-        template("chefignore.erb", "chefignore")
       end
 
       # @return [true,false] whether or not a Gemfile needs to be initialized
