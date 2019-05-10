@@ -25,7 +25,7 @@ module Kitchen
   # @author Fletcher Nichol <fnichol@nichol.ca>
   module Driver
     # Default driver plugin to use
-    DEFAULT_PLUGIN = "dummy".freeze
+    DEFAULT_PLUGIN = "docker".freeze
 
     # Returns an instance of a driver given a plugin type string.
     #

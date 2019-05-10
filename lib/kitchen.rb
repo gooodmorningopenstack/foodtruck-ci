@@ -64,11 +64,11 @@ module Kitchen
     # @return [Mutex] a mutex used for Dir.chdir coordination
     attr_accessor :mutex_chdir
 
-    # Returns the root path of the Kitchen gem source code.
+    # Returns the root path of the lib directory.
     #
-    # @return [Pathname] root path of gem
+    # @return [Pathname] root path of lib directory
     def source_root
-      @source_root ||= Pathname.new(File.expand_path("../../", __FILE__))
+      @source_root ||= Pathname.new(File.expand_path("../", __FILE__))
     end
 
     # Returns a default logger which emits on standard output.
